@@ -266,6 +266,11 @@ public class School {
 		if (s == null || c == null) {
 			return false;
 		}
+		/*for (int i = 0; i < enroll.size(); i++) {
+			if (enroll.get(i).getStudent().getStudentID() == studentId && enroll.get(i).getCourse().getCourseID() == courseId) {
+				enroll.remove(i);
+			}	
+		}*/
 		Enroll e = new Enroll("IP", 0, c, s);
 		enroll.add(e);
 		return true;

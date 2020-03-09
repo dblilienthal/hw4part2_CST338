@@ -70,17 +70,9 @@ public class Student {
 			}
 		}
 		double GPA = gpaTotal/studentNum;
-		System.out.println("GPA: " + GPA);
-		System.out.println("GPA Rounded: " + Math.round(GPA * 1000.0)/1000.0);
-		//return gpaTotal/studentNum;
 		DecimalFormat df = new DecimalFormat("#.##");      
-		double temp = Double.valueOf(df.format(GPA));
-
-		//System.out.println(time); // 200.35
-		return temp;
-		//return Math.round(GPA * 1000.0)/1000.0;
-		//return f;
-		//return gpaTotal/studentNum;
+		double GPARound = Double.valueOf(df.format(GPA));
+		return GPARound;
 	}
 
 	@Override
