@@ -71,17 +71,22 @@ public class Course {
 		}
 	}*/
 
+	/*
+	 * This returns the average GPA of all the students enrolled in the course.
+	 */
+	
 	public double getAverage() {
 		ArrayList<Enroll> t = School.getEnroll();
 		double studentNum = 0;
 		double gpaTotal = 0;
 		for (int i = 0; i < t.size(); i++) {
-			//System.out.println(t.get(i).getCourse().getCourseID());
-			//System.out.println("This course ID" + this.getCourseID());
 			if (t.get(i).getCourse().getCourseID() == this.getCourseID()) { 
 				gpaTotal += t.get(i).getGrade();
 				studentNum++;
 			}
+		}
+		if (studentNum == 0) {
+			return 0.0;
 		}
 		return gpaTotal/studentNum;
 	}

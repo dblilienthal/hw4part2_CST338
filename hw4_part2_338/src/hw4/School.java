@@ -193,6 +193,10 @@ public class School {
 		return null;
 	}
 
+	/*
+	 * This returns the Enroll ArrayList
+	 */
+	
 	public static ArrayList<Enroll> getEnroll() {
 		return enroll;
 	}
@@ -205,7 +209,10 @@ public class School {
 		// this method will be complete in part 3
 	}
 
-	//returns the Courses
+	/*
+	 * Returns the courses
+	 */
+	
 	public Course getCourse(int courseId) {
 		Course c = getCourseID(courseId);
 		if (c == null) {
@@ -214,6 +221,10 @@ public class School {
 		return c;
 	}
 
+	/*
+	 * This will delete a course from the courses ArrayList
+	 */
+	
 	public boolean deleteCourse(int id) {
 		Course c = getCourseID(id);
 		List<Course> course = new ArrayList<Course>(courses);
@@ -232,8 +243,13 @@ public class School {
 		return null;
 	}
 
+	/*
+	 * This will unregister the student from all courses and mark the student as graduated. 
+	 * If the student id is invalid or if the student has already graduated, print a failure 
+	 * message and return false. 
+	 */
+	
 	public boolean graduateStudent(int id) {
-		// this method will be complete in part 3
 		int j = enroll.size();
 		Student s = getStudentID(id);
 		if (s == null) {
@@ -256,13 +272,17 @@ public class School {
 		return false;
 	}
 
+	/*
+	 * This will assign a student to a course and add it to the enrollment ArrayList
+	 */
+	
 	public boolean register(int studentId, int courseId) {
 		Student s = getStudentID(studentId);
 		Course c = getCourseID(courseId);
 		if (s == null || c == null) {
 			return false;
 		}
-		//if the student is re-enrolling in the class after receiving a letter grade
+		//This will replace a students letter grade and grade if the is re-taking the course
 		for (int i = 0; i < enroll.size(); i++) {
 			if (enroll.get(i).getStudent().getStudentID() == studentId && enroll.get(i).getCourse().getCourseID() == courseId) {
 				enroll.get(i).setLetter_grade("IP");
@@ -275,13 +295,18 @@ public class School {
 		return true;
 	}
 
+	/*
+	 * This method will update the grade of a student enrolled in a course. 
+	 */
+	
 	public boolean grade(int studentId, int courseId, double grade, String letter_grade) {
-		// this method will add a students grade to the enrollment List
 		Student s = getStudentID(studentId);
 		Course c = getCourseID(courseId);
 		if (s == null || c == null){
+			System.out.println("Grade Failed! Student or Course does not exist!");
 			return false;
 		}
+		//If the student is already enrolled in the class, this will replace the grade
 		for (int i = 0; i<enroll.size(); i++) {
 			if(enroll.get(i).getStudent().getStudentID() == studentId && enroll.get(i).getCourse().getCourseID() == courseId) {
 				enroll.remove(i);
@@ -289,47 +314,64 @@ public class School {
 		}
 		Enroll e = new Enroll(letter_grade, grade, c, s);
 		enroll.add(e);
+		System.out.println("Grade entered succefully! Student Id: " + studentId + " Course Id: " + courseId + " Grade: " + grade + " Letter Grade: " + letter_grade);
 		return true;
 	}
 
+	/*
+	 * This method will remove a student from the enrollment ArrayList
+	 */
 
 	public boolean drop(int studentId, int courseId) {
-		// this method will be complete in part 3
 		Student s = getStudentID(studentId);
 		Course c = getCourseID(courseId);
 		if (s == null || c == null) {
+			System.out.println("Error! Drop Failed. Student Id or Course Id does not exist");
 			return false;
 		}
 		for (int i = 0; i<enroll.size(); i++) {
 			if(enroll.get(i).getStudent().getStudentID() == studentId && enroll.get(i).getCourse().getCourseID() == courseId) {
 				enroll.remove(i);
+				System.out.println("Drop Sucessfull! Student Id: " + studentId + " Course Id: " + courseId);
 				return true;
 			}
 		}
-		
 		return false;
 	}
 
+	/*
+	 * This will assign an instructor to a course using the instructor Id and the courseId
+	 */
+	
 	public boolean assign(int instructorId, int courseId) {
 		Instructor i = getInstructorId(instructorId);
 		Course c = getCourseID(courseId);
 		if (i == null || c == null ) {
+			System.out.println("Assign failed! Instructor or Course does not exist.");
 			return false;
 		}
 		c.setInstructorId(courseId);//set the course to a new courseId
 		c.setInstructorId(instructorId);//Set the course to a new Instructor 
+		System.out.println("Assign Sucessful! Instructor Id: " + instructorId + " Course Id: " + courseId);
 		return true;
 
 	}
 
+	/*
+	 * This method will unassign an instructor from a course. The instructor ID will be 0 
+	 * when there is no instructor assigned.  
+	 */
+	
 	public boolean unassign(int instructorId, int courseId) {
 		Instructor i = getInstructorId(instructorId);
 		Course c = getCourseID(courseId);
 		if (i == null || c == null || c.getInstructorId() != instructorId) {
+			System.out.println("Unassign failed! Instructor, Instructor Id, or Course does not exist!");
 			return false;
 		}
 		instructorId = 0;
 	    c.setInstructorId(instructorId); // set the new instructor id to 0
+	    System.out.println("Unassign Sucessful! Instructor Id: " + instructorId + " Course Id:" + courseId);
 		return true;
 	}
 
