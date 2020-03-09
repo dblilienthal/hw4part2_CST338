@@ -205,8 +205,8 @@ public class School {
 		// this method will be complete in part 3
 	}
 
+	//returns the Courses
 	public Course getCourse(int courseId) {
-		// this method will be complete in part 3
 		Course c = getCourseID(courseId);
 		if (c == null) {
 			System.out.println("Course Does Not Exist");
@@ -215,13 +215,9 @@ public class School {
 	}
 
 	public boolean deleteCourse(int id) {
-		// this method will be complete in part 3
 		Course c = getCourseID(id);
-		
 		List<Course> course = new ArrayList<Course>(courses);
-		List<Enroll> enrollment = new ArrayList<Enroll>(enroll);
 		if (course.isEmpty() || enroll.isEmpty()) {
-			//course.remove(course.indexOf(c));
 			courses.remove(course.indexOf(c));
 			return true;
 		}
@@ -266,11 +262,14 @@ public class School {
 		if (s == null || c == null) {
 			return false;
 		}
-		/*for (int i = 0; i < enroll.size(); i++) {
+		//if the student is re-enrolling in the class after receiving a letter grade
+		for (int i = 0; i < enroll.size(); i++) {
 			if (enroll.get(i).getStudent().getStudentID() == studentId && enroll.get(i).getCourse().getCourseID() == courseId) {
-				enroll.remove(i);
+				enroll.get(i).setLetter_grade("IP");
+				enroll.get(i).setGrade(0.0);
+				return true;
 			}	
-		}*/
+		}
 		Enroll e = new Enroll("IP", 0, c, s);
 		enroll.add(e);
 		return true;
@@ -301,11 +300,8 @@ public class School {
 		if (s == null || c == null) {
 			return false;
 		}
-		ArrayList<Enroll> enrolled = new ArrayList<Enroll>(enroll);
-		ArrayList<Course> course = new ArrayList<Course>(courses);
 		for (int i = 0; i<enroll.size(); i++) {
 			if(enroll.get(i).getStudent().getStudentID() == studentId && enroll.get(i).getCourse().getCourseID() == courseId) {
-				//enroll.remove(s.getStudentID());
 				enroll.remove(i);
 				return true;
 			}
