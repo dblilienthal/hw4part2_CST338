@@ -59,15 +59,15 @@ public class Student {
 		double studentNum = 0;
 		double gpaTotal = 0;
 		for (int i = 0; i < t.size(); i++) {
-			// && !t.get(i).getLetter_grade().equals("IP")
 			if (t.get(i).getStudent().getStudentID() == this.getStudentID()) {
-				/*
-				 * if (!t.get(i).getLetter_grade().equals("IP")) { gpaTotal +=
-				 * t.get(i).getGrade(); studentNum++; }
-				 */
-				gpaTotal += t.get(i).getGrade();
-				studentNum++;
+				if (t.get(i).getGrade() != 0) {
+					gpaTotal += t.get(i).getGrade();
+					studentNum++;
+				}
 			}
+		}
+		if (studentNum == 0) {
+			return 0.0;
 		}
 		double GPA = gpaTotal / studentNum;
 		DecimalFormat df = new DecimalFormat("#.##");
