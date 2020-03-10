@@ -1,11 +1,7 @@
 package hw4;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Student {
 
@@ -104,35 +100,11 @@ public class Student {
 			studentCourses = String.join("\n", c);
 			return "Student Number: " + studentID + 
 					"\nName: " + name + 
-					"\nCourses Enrolled: " + studentCourses
+					"\nCourses Enrolled:\n" + studentCourses
 					+ "\nCourse Average: " + avg + "\n";
 		}
 		else {
-			return "studentID= " + studentID + " No student information.";
+			return "studentID: " + studentID + "\nNo student information.";
 		}
 	}
-	/*
-	 * public String toString() { if (isGraduate() == false) { return
-	 * "Student [studentID=" + studentID + ", name=" + name + ", isGraduate=" +
-	 * isGraduate + "] \n"; } else { return "studentID= " + studentID +
-	 * " No student information."; } }
-	 */
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		School school = new School("SCD");
-		school.addInstructor(1, "tom", "tom@csumb.edu", "813-111-1212");
-		school.addCourse(338, "CST338 Software Design", 1, "BIT105");
-		school.addCourse(438, "Software Engineering", 1, "BIT104");
-		school.addStudent(1001, "Grace", 338, 68, "D");
-
-		// Grace does not have a grade. So student average should be 0.0
-		Student grace = school.getStudentInfo(1001);
-		double gpa = grace.getAverage();
-		System.out.println(grace);
-		System.out.println(gpa);
-
-	}
-
 }

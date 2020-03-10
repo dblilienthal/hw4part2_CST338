@@ -12,8 +12,6 @@ public class Enroll {
 		this.grade = grade;
 		this.course = course;
 		this.student = student;
-		//course = new Course();
-		//student = new Student();
 	}
 	
 	//default constructor
@@ -59,10 +57,4 @@ public class Enroll {
 		return "Enroll [letter_grade=" + letter_grade + ", grade=" + grade + ", course=" + course + ", student="
 				+ student + "]";
 	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

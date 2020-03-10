@@ -3,11 +3,8 @@ package hw4;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-
-//import Lab5.account;
 
 public class School {
 
@@ -24,6 +21,10 @@ public class School {
 		faculty = new ArrayList<>();
 		enroll = new ArrayList<>();
 	}
+	
+	/*
+	 * This method will read data from a text file and insert it into the appropriate list
+	 */
 
 	public void readData(String filename) {
 		Scanner input;
@@ -83,6 +84,10 @@ public class School {
 		System.out.println("Student Information");
 		System.out.println(Arrays.toString(getStudents().toArray()));
 	}
+	
+	/*
+	 * This will add an instructor to the instructor ArrayList
+	 */
 
 	public boolean addInstructor(int id, String name, String email, String phone) {
 		Instructor i = getInstructorId(id);
@@ -96,6 +101,10 @@ public class School {
 				i.getInstuctorEmail(), i.getInstructorPhone());
 		return true;
 	}
+	
+	/*
+	 * This will add a course to the course ArrayList
+	 */
 
 	public boolean addCourse(int id, String title, int instructor_id, String location) {
 		Course c = getCourseID(id);
@@ -116,12 +125,14 @@ public class School {
 
 		return true;
 	}
+	
+	/*
+	 * Adding a student if the id doesn't exists, if the id exists but then the name
+	 * is different, then that would be an error if it already exists then create 
+	 * an enrollment, but if it doesn't exist then create a student and an enrollment.
+	 */
 
 	public boolean addStudent(int id, String name, int course_id, double grade, String letter_grade) {
-		// addind a student if the id doesnt exists, if the id exists but then the name
-		// is different, then that would be an error
-		// if it already exists then create an enrollment, but if it doesnt exist then
-		// create a student and an enrollment.
 		Student s = getStudentID(id);
 		Course c = getCourseID(course_id);
 		if (c == null) {
@@ -151,6 +162,7 @@ public class School {
 				return i;
 			}
 		}
+		System.out.println("Error instructor Id not found! Instructor Id: " + id);
 		return null;
 	}
 
@@ -160,6 +172,7 @@ public class School {
 				return c;
 			}
 		}
+		System.out.println("Error course Id not found! course Id: " + id);
 		return null;
 	}
 
@@ -169,27 +182,37 @@ public class School {
 				return s;
 			}
 		}
+		System.out.println("Error student Id not found! Student Id: " + id);
 		return null;
 	}
 
+	/*
+	 * Returns the ArrayList of Students
+	 */
+	
 	public ArrayList<Student> getStudents() {
 		return students;
 	}
+	
+	/*
+	 * Returns the ArrayList of courses
+	 */
 	
 	public ArrayList<Course> getCourses() {
 		return courses;
 	}
 
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
-	}
-
+	/*
+	 * Returns the students name
+	 */
+	
 	public Student getStudentName(String name) {
 		for (Student s : getStudents()) {
 			if (s.getName() == name) {
 				return s;
 			}
 		}
+		System.out.println("Error student name not found! Student name: " + name);
 		return null;
 	}
 
@@ -201,12 +224,38 @@ public class School {
 		return enroll;
 	}
 
+	/*
+	 * Method prints a short summary of all courses
+	 */
+	
 	public void courseInfo() {
-		// this method will be complete in part 3
+		System.out.println("Number of Courses:" + courses.size());
+		for (Course c: courses) {
+			int temp = 0;
+			for (Enroll e2: enroll) {
+				if (c.getCourseID() == e2.getCourse().getCourseID()) {
+					temp++;
+				}
+			}
+			System.out.println(c.getCourseID() + ": " + temp + " enrolled" );
+		}
 	}
 
 	public void courseInfo(int id) {
-		// this method will be complete in part 3
+		Course c = getCourseID(id);
+		Instructor i = getInstructorId(c.getInstructorId());
+		System.out.println("Course Number: " + c.getCourseID());
+		System.out.println("Instructor: " + i.getInstructorName());
+		System.out.println("Course title: " + c.getCourseTitle());
+		System.out.println("Room: " + c.getLocation());
+		int temp = 0;
+		for (Enroll e2: enroll) {
+			if (c.getCourseID() == e2.getCourse().getCourseID()) {
+				temp++;
+			}
+		}
+		System.out.println("Total enrolled: " + temp);
+		System.out.println("Course average " + c.getAverage());
 	}
 
 	/*
@@ -230,16 +279,23 @@ public class School {
 		List<Course> course = new ArrayList<Course>(courses);
 		if (course.isEmpty() || enroll.isEmpty()) {
 			courses.remove(course.indexOf(c));
+			System.out.println("Course delete successful! Course Id: " + id);
 			return true;
 		}
+		System.out.println("Course delete failed! Course not empty");
 		return false;
 	}
 
+	/*
+	 * Returns the student object
+	 */
+	
 	public Student getStudentInfo(int id) {
 		Student s = getStudentID(id);
 		if (getStudents().contains(s)) {
 			return s;
 		}
+		System.out.println("Error student not found! Student Id: " + id);
 		return null;
 	}
 
@@ -267,6 +323,7 @@ public class School {
 					}
 				}
 			}
+			System.out.println("Student graduation sucessful! Student Id: " + id);
 			return true;
 		}		
 		return false;
@@ -380,15 +437,4 @@ public class School {
 		return "School [name=" + name + ", students=" + students + ", courses=" + courses + ", faculty=" + faculty
 				+ ", enroll=" + enroll + "]";
 	}
-	
-	public static void main(String[] args) {
-		Course c = new Course();
-		Course c2 = new Course(338, "CST338 Software Design", 1, "BIT105");
-		System.out.println(c);
-		System.out.println(c2);
-
-		School school = new School("SCD");
-		school.addCourse(338, "CST338 Software Design", 1, "BIT105");
-	}
-
 }
